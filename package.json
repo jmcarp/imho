@@ -1,0 +1,22 @@
+{
+  "name": "imho",
+  "version": "0.1.0",
+  "description": "",
+  "main": "content.js",
+  "scripts": {
+    "build": "webpack",
+    "clean": "rm -rf dist; rm -f package.zip",
+    "package": "npm run clean; npm run build; zip -r package.zip dist/"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "copy-webpack-plugin": "^4.4.1",
+    "css-loader": "^0.28.9",
+    "style-loader": "^0.20.2",
+    "webpack": "^3.11.0"
+  },
+  "dependencies": {
+    "purecss": "^1.0.0"
+  }
+}

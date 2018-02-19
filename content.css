@@ -1,0 +1,10 @@
+.imho-blacklist {
+  opacity: 0.33;
+  background: repeating-linear-gradient(
+    45deg,
+    #b0b0b0,
+    #b0b0b0 10px,
+    #d0d0d0 10px,
+    #d0d0d0 20px
+  );
+}
