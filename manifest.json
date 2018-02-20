@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "imho",
   "description": "Hide articles from obnoxious New York Times opinion writers",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "options_page": "options.html",
   "content_scripts": [
     {

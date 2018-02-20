@@ -1,16 +1,16 @@
 {
   "name": "imho",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "content.js",
   "scripts": {
     "build": "webpack",
-    "clean": "rm -rf dist; rm -f package.zip",
-    "package": "npm run clean; npm run build; zip -r package.zip dist/"
+    "package": "npm run build; zip -r package.zip dist/"
   },
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "clean-webpack-plugin": "^0.1.18",
     "copy-webpack-plugin": "^4.4.1",
     "css-loader": "^0.28.9",
     "style-loader": "^0.20.2",

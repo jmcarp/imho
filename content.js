@@ -1,7 +1,7 @@
 import storage from './storage';
 
 const IS_DATE = /\/(\d{4})\/(\d{2})\/(\d{2})/;
-const CLEANUP_THRESHOLD = 14 * 24 * 60 * 60 * 1000;
+const CLEANUP_THRESHOLD = 7 * 24 * 60 * 60 * 1000;
 
 const cleanup = async () => {
   const now = new Date();
@@ -31,11 +31,17 @@ const fetchAuthors = async (url) => {
   const resp = await fetch(url);
   const body = await resp.text();
   const doc = parser.parseFromString(body, 'text/html');
-  const author = doc.querySelector('meta[name="author"]').getAttribute('content');
+  // Authors in `meta[name="author"]` may be concatenated or split across tags;
+  // get all matching tags and join content
+  const authors = Array.from(
+    doc.querySelectorAll('meta[name="author"]')
+  ).map(author => {
+    return author.getAttribute('content');
+  }).join(', ');
   // Articles from op-ed columnists that include a `p.has-single-author` don't include
   // byline data in `span.byline-author`; use `meta[name="author"]` directly.
   if (doc.querySelector('p.has-single-author')) {
-    return [author];
+    return [authors];
   }
   // Author names in `span.byline-author` use all-caps; align with mixed-case names
   // in `meta[name="author"]` for correct casing.
@@ -44,8 +50,8 @@ const fetchAuthors = async (url) => {
     doc.querySelectorAll('span.byline-author')
   ).map(byline => {
     const name = byline.getAttribute('data-byline-name');
-    position = author.toLowerCase().indexOf(name.toLowerCase(), position);
-    return author.slice(position, position + name.length);
+    position = authors.toLowerCase().indexOf(name.toLowerCase(), position);
+    return authors.slice(position, position + name.length);
   });
 };
 
@@ -74,8 +80,10 @@ const mask = async(node, blacklist) => {
     }
     if (isBlacklisted) {
       urls[url].forEach(link => {
-        const parent = link.closest('.story:not(.theme-main)') || link;
-        parent.classList.add('imho-blacklist');
+        const node = link.closest('article.story:not(.theme-main)') // Parent story, excluding main article
+          || link.querySelector('article.story') // Child story, e.g. from trending view
+          || link; // Fall back to link if article not found
+        node.classList.add('imho-blacklist');
       });
     }
   }));
@@ -85,7 +93,9 @@ const DYNAMIC_SELECTORS = [
   'div.tab-content', // Most emailed / viewed / recommended on homepage
   'aside.trending-module', // Trending articles on article view
   '#ribbon', // Top ribbon on article view
-  'div.stream' // Latest stream on section view
+  'div.stream', // Latest stream on section view
+  '#trending-list-container', // Trending section on trending page
+  '#most-popular-lists', // Popular lists on trending page
 ];
 const watch = (selectors, blacklist) => {
   const observer = new MutationObserver(async (mutations) => {
