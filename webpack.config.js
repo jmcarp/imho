@@ -5,7 +5,8 @@ const path = require('path');
 module.exports = {
   entry: {
     content: './content.js',
-    options: './options.js'
+    options: './options.js',
+    event: './event.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
