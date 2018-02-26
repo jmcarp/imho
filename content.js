@@ -1,4 +1,5 @@
 import storage from './storage';
+import * as listeners from './listeners';
 
 const IS_DATE = /\/(\d{4})\/(\d{2})\/(\d{2})/;
 const CLEANUP_THRESHOLD = 7 * 24 * 60 * 60 * 1000;
@@ -81,9 +82,11 @@ const mask = async(node, blacklist) => {
     if (isBlacklisted) {
       urls[url].forEach(link => {
         const node = link.closest('article.story:not(.theme-main)') // Parent story, excluding main article
-          || link.querySelector('article.story') // Child story, e.g. from trending view
-          || link; // Fall back to link if article not found
-        node.classList.add('imho-blacklist');
+          || link.querySelector('article.story'); // Child story, e.g. from trending view
+        const parent = node.closest('li') // Article contained in `li`
+          || node.closest('div.collection'); // Article contained in `div.collection`
+        parent.classList.add('imho-node');
+        parent.classList.add('imho-blacklist');
       });
     }
   }));
@@ -116,6 +119,9 @@ const main = async () => {
 
   watch(DYNAMIC_SELECTORS, blacklist);
   await mask(document, blacklist);
+
+  document.addEventListener('dblclick', listeners.toggleBlacklist);
+  document.addEventListener('mousedown', listeners.suppressDoubleClickHighlight);
 };
 
 main();

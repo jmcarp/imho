@@ -1,4 +1,5 @@
 import storage from './storage';
+import * as listeners from './listeners';
 import 'purecss/build/pure-min.css';
 import './content.css';
 
@@ -109,3 +110,5 @@ const loadOptions = async () => {
 };
 
 document.addEventListener('DOMContentLoaded', loadOptions);
+document.addEventListener('dblclick', listeners.toggleBlacklist);
+document.addEventListener('mousedown', listeners.suppressDoubleClickHighlight);

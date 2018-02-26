@@ -1,5 +1,4 @@
 .imho-blacklist {
-  opacity: 0.1;
   background: repeating-linear-gradient(
     45deg,
     #b0b0b0,
@@ -7,4 +6,18 @@
     #d0d0d0 10px,
     #d0d0d0 20px
   );
+}
+
+.imho-blacklist * {
+  visibility: hidden;
+}
+
+.imho-blacklist a {
+  pointer-events: none;
+}
+
+/* Hack: Switch trending articles to `display: block` so that `pointer-events`
+ * works as expected */
+#most-popular-lists .imho-blacklist a {
+  display: block;
 }

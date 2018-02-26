@@ -11,9 +11,19 @@
       <div class="pure-u-1-5"></div>
       <div class="pure-u-3-5">
         <h2>
-          Welcome to `imho`, a Chrome extension that lets you hide opinion articles from authors you're not interested in.
-          Select one or more authors from the list below, save your selection, and opinion articles from those authors will be
-          <span class="imho-blacklist">hidden</span>.
+          <p>
+            Welcome to `imho`, a Chrome extension that hides New York Times opinion articles from authors you're not interested in.
+            Select one or more authors from the list below, click "Hide", and opinion articles from those authors will be
+            hidden when you browse <a href="https://www.nytimes.com" target="_blank">nytimes.com</a>, like this:
+          </p>
+          <p>
+            <span class="imho-node imho-blacklist">
+              <span>Somebody's unqualified opinion</span>
+            </span>
+          </p>
+          <p>
+            You can reveal a hidden link by double-clicking it. But why would you want to?
+          </p>
         </h2>
         <h3>
           Found a bug? Have a feature request? Send feedback via <a href="https://github.com/jmcarp/imho" target="_blank">GitHub</a>.
@@ -21,7 +31,7 @@
         <form class="pure-form pure-form-stacked">
           <fieldset>
             <select multiple id="blacklist"></select>
-            <button id="save" class="pure-button pure-button-primary">Block</button>
+            <button id="save" class="pure-button pure-button-primary">Hide</button>
           </fieldset>
         </form>
         <div id="tweet">
