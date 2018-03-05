@@ -65,9 +65,9 @@ const mask = async(node, blacklist) => {
 
   const urls = {};
   links.forEach(function(link) {
-    const url = link.getAttribute('href');
-    urls[url] = urls[url] || [];
-    urls[url].push(link);
+    const url = new URL(link.getAttribute('href'));
+    urls[url.pathname] = urls[url.pathname] || [];
+    urls[url.pathname].push(link);
   });
 
   await Promise.all(Object.keys(urls).map(async (url) => {

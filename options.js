@@ -84,7 +84,7 @@ const loadOptions = async () => {
   const blacklist = new Set(items.blacklist || []);
   const authors = union(KNOWN_AUTHORS, blacklist);
   Object.keys(items).filter(item => {
-    return item.startsWith('https://');
+    return item.startsWith('/');
   }).forEach(url => {
     for (const author of items[url]) {
       authors.add(author);
